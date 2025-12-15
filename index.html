@@ -23,41 +23,45 @@
 
     <meta http-equiv="cleartype" content="on">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js" integrity="sha384-Ro/W0Bz8A8Qc0uYJoMtcnYbVb0tFqT9T2h5Vzj+2QaHb5iddX0I06t1zC/U6c8B5" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
 
     <style>
-        /* Language Toggle Logic */
-        .lang-zh { display: none; } /* Default hide Chinese */
+        /* 1. 中英文切换逻辑 */
+        .lang-zh { display: none; } /* 默认隐藏中文 */
         
         body.zh-mode .lang-en { display: none; }
         body.zh-mode .lang-zh { display: inline; }
         body.zh-mode div.lang-zh, body.zh-mode p.lang-zh, body.zh-mode li.lang-zh { display: block; }
         body.zh-mode span.lang-zh { display: inline; }
 
-        /* Toggle Button Style */
-        .lang-btn {
-            background: transparent;
-            border: 1px solid #fff;
+        /* 2. 悬浮按钮样式 (强制显示在右上角) */
+        .lang-btn-fixed {
+            position: absolute;
+            top: 10px;        /* 距离顶部距离 */
+            right: 20px;      /* 距离右侧距离 */
+            z-index: 9999;    /* 确保在最上层 */
+            background-color: rgba(0, 0, 0, 0.7); /* 半透明黑色背景，防文字看不清 */
             color: #fff;
-            padding: 5px 10px;
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 5px 12px;
             cursor: pointer;
-            font-size: 14px;
-            border-radius: 4px;
-            margin-left: 15px;
+            font-size: 13px;
             font-weight: bold;
+            border-radius: 20px;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        .lang-btn:hover {
-            background: rgba(255,255,255,0.2);
+        .lang-btn-fixed:hover {
+            background-color: #000;
+            border-color: #fff;
         }
-        /* Mobile adjustment */
+
+        /* 移动端适配：防止按钮遮挡菜单 */
         @media (max-width: 768px) {
-            .lang-btn {
-                position: absolute;
-                top: 10px;
-                right: 60px; /* Next to hamburger menu */
-                color: #000; /* Assuming mobile menu background differs */
-                border-color: #000;
+            .lang-btn-fixed {
+                right: 60px; /* 移动端给汉堡菜单留出位置 */
+                padding: 4px 8px;
+                font-size: 12px;
             }
         }
     </style>
@@ -67,7 +71,8 @@
     <div id="MathJax_Message" style="display: none;"></div>
 
     <div class="masthead">
-        <div class="masthead__inner-wrap">
+        <div class="masthead__inner-wrap" style="position: relative;"> <button class="lang-btn-fixed" onclick="toggleLanguage()">EN / 中</button>
+
             <div class="masthead__menu">
                 <nav id="site-nav" class="greedy-nav">
                     <button class="hidden" count="0"><div class="navicon"></div></button>
@@ -112,10 +117,6 @@
                                 <span class="lang-en">Internships</span>
                                 <span class="lang-zh">实习经历</span>
                             </a>
-                        </li>
-                        
-                        <li class="masthead__menu-item">
-                            <button class="lang-btn" onclick="toggleLanguage()">EN / 中</button>
                         </li>
                     </ul>
                     <ul class="hidden-links hidden"></ul>
